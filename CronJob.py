@@ -2,8 +2,8 @@ import schedule
 from datetime import datetime
 import time
 
-from .YFinance import YFinance
-from ..Database.CouchDB import CouchDB
+from YFinance import YFinance
+from Database.CouchDB import CouchDB
 from _config import config
 
 class CronJob():
