@@ -30,7 +30,7 @@ class CronJob():
                 self.CouchDB.Update(dbName='yfinance', doc=yahoo_df_clone.to_dict(), _id=symbol)
 
             self.LastUpdateSuccess = datetime.now()
-            print ('[%s] Update Success!'str(self.LastUpdateSuccess))
+            print ('[%s] Update Success!'%str(self.LastUpdateSuccess))
         except Exception as e:
             print('[-] Update Job Ends with Error')
             print(e)
