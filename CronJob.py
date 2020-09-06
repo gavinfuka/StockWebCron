@@ -12,7 +12,7 @@ class CronJob():
         self.CouchDB = CouchDB(config=config["CouchDB"])
 
     def Start(self):
-        self.LastDate = datetime.now()
+        self.LastUpdate = datetime.now()
         self.UpdateJob()
         schedule.every().day.at("18:00").do(self.UpdateJob)
         while True:
@@ -20,7 +20,7 @@ class CronJob():
             time.sleep(60)
 
     def UpdateJob(self):
-        print('[-] Update Job Starts')
+        print('[%s] Update Job Starts'%str(self.LastUpdate))
         try:
             for i in range(0,9999):
                 symbol = self.PadZero(i)
@@ -28,7 +28,9 @@ class CronJob():
                 yahoo_df_clone = yahoo_df
                 yahoo_df_clone.index = yahoo_df_clone.index.astype(str)
                 self.CouchDB.Update(dbName='yfinance', doc=yahoo_df_clone.to_dict(), _id=symbol)
-            print ('[x] Update Success!')
+
+            self.LastUpdateSuccess = datetime.now()
+            print ('[%s] Update Success!'str(self.LastUpdateSuccess))
         except Exception as e:
             print('[-] Update Job Ends with Error')
             print(e)
